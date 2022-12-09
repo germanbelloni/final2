@@ -7,7 +7,7 @@ let page = 1;
 //     e.preventDefault();
 //     modal.classList.add('modal--show');
 // })
-let element = document.createElement('div');
+
 const btnBack = document.getElementById('btnBack');
 const btnNext = document.getElementById('btnNext');
 
@@ -42,14 +42,14 @@ const loadMovies = async() => {
                 const movie = data.results[i]
 
                 html += `
-                    <section class="movie" id="b${i}">
+                    <section class="movie" id="a${movie.title}">
                         <img class="poster" src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
                         <h1>${movie.title}</h1>
     
-                        <div id="m${movie.id}" class="modal">
+                        <div id="${movie.id}" class="modal">
     
                             <div class="modal-container">
-                                <span id="close${movie.id}" class="close">&times;</span>
+                                <span id="${movie.id}" class="close">&times;</span>
                                 <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
                                 <div class="description-div">
                                     <div class="title">
@@ -69,35 +69,17 @@ const loadMovies = async() => {
             }
             document.getElementById('container').innerHTML = html;
 
-            element.innerHTML = html
 
-            for(let i = 0; i < data.results.length;i++){
+            for (let i = 0; i < data.results.length;i++){
                 const movie = data.results[i]
-                
-                let btn = element.querySelector(`#b${i}`)
-    
-                let modal = element.querySelector(`#m${movie.id}`);
-            
-                let span = element.querySelector(`#close${movie.id}`);
-            
-                btn.onclick = function() {
-                    modal.style.display = "block";
-                    window.document.title = `Peliculas | ${movie.title}`
+
+                // let id = element.querySelector(`#a${movie.title}`);
+
+                id.onclick =function(){
+                    console.log('hola')
                 }
-            
-                span.onclick = function() {
-                    modal.style.display = "none";
-                }
-            
-                window.addEventListener('click', (e) => {
-                    if (e.target == modal) {
-                        modal.style.display = "none";
-                        window.document.title = 'Peliculas'
-                    }
-                })
             }
            
-
         }else if(response.status === 401) {
             console.log('Paso algo malo')
         }else if(response.status === 404) {
