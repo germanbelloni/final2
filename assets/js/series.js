@@ -29,7 +29,7 @@ const loadSeries = async() => {
             const data = await response.json()
             
             showSeries(data.results);
-            showCard(data.results);
+            //showCard(data.results);
         }else if(response.status === 401) {
             console.log('Paso algo malo')
         }else if(response.status === 404) {
@@ -64,10 +64,10 @@ const showSeries = async(data) => {
 
                 console.log(movie)
                 html += `
-                    <section class="movie" id="b${movie.name}">
+                    <section class="movie" id="a${movie.name}">
                         <img class="poster" src="https://image.tmdb.org/t/p/w500/${movie.backdrop_path}" alt="${movie.name}">
                         <h1>${movie.name}</h1>
-    
+                        <button id="a${movie.name}"/>
                         
                     </section>
                 `
@@ -84,31 +84,31 @@ const showSeries = async(data) => {
     
 }
 
-function showCard(movies){
-    main.innerHTML=''
-    movies.forEach((movie) =>{
-        const {name, backdrop_path, vote_average,first_air_date,overview}=movie
-        const moviesElement=document.createElement('div')
-        moviesElement.innerHTML=`
-            <div id="${movie.id}" class="modal">
+// function showCard(movies){
+//     main.innerHTML=''
+//     movies.forEach((movie) =>{
+//         const {name, backdrop_path, vote_average,first_air_date,overview}=movie
+//         const moviesElement=document.createElement('div')
+//         moviesElement.innerHTML=`
+//             <div id="${movie.id}" class="modal">
 
-                <div class="modal-container">
-                    <span id="${movie.id}" class="close">&times;</span>
-                    <img src="https://image.tmdb.org/t/p/w500/${movie.backdrop_path}" alt="${movie.name}">
-                    <div class="description-div">
-                        <div class="title">
-                            <h1>${movie.name}</h1>
-                            <p>${movie.overview}</p>
-                        </div>
-                        <h3>Valoración</h3>
-                        </br>
-                        <p><b>${movie.vote_average}</b></p>
-                        <h4>Fecha de lanzamiento: ${movie.first_air_date}</h4>
-                    </div>
-                </div>
+//                 <div class="modal-container">
+//                     <span id="${movie.id}" class="close">&times;</span>
+//                     <img src="https://image.tmdb.org/t/p/w500/${movie.backdrop_path}" alt="${movie.name}">
+//                     <div class="description-div">
+//                         <div class="title">
+//                             <h1>${movie.name}</h1>
+//                             <p>${movie.overview}</p>
+//                         </div>
+//                         <h3>Valoración</h3>
+//                         </br>
+//                         <p><b>${movie.vote_average}</b></p>
+//                         <h4>Fecha de lanzamiento: ${movie.first_air_date}</h4>
+//                     </div>
+//                 </div>
 
-            </div>
-            `
-    })
-}
+//             </div>
+//             `
+//     })
+//}
 loadSeries()

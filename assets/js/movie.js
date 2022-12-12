@@ -11,6 +11,8 @@ let page = 1;
 const btnBack = document.getElementById('btnBack');
 const btnNext = document.getElementById('btnNext');
 
+const array_movie = []
+
 btnNext.addEventListener('click',() =>{
     if (page<1000){
         page += 1;
@@ -41,44 +43,29 @@ const loadMovies = async() => {
                 
                 const movie = data.results[i]
 
+
                 html += `
                     <section class="movie" id="a${movie.title}">
                         <img class="poster" src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
                         <h1>${movie.title}</h1>
-    
-                        <div id="${movie.id}" class="modal">
-    
-                            <div class="modal-container">
-                                <span id="${movie.id}" class="close">&times;</span>
-                                <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
-                                <div class="description-div">
-                                    <div class="title">
-                                        <h1>${movie.title}</h1>
-                                        <p>${movie.overview}</p>
-                                    </div>
-                                    <h3>Valoración</h3>
-                                    </br>
-                                    <p><b>${movie.vote_average}</b></p>
-                                    <h4>Fecha de lanzamiento: ${movie.release_date}</h4>
-                                </div>
-                            </div>
-    
-                        </div>
+                        <button class="btn" onclick="showCard(${movie.id},${movie.title},${movie.overview},${movie.vote_average},${movie.release_date})">Show More</button>
+                        
+                        
                     </section>
                 `
             }
             document.getElementById('container').innerHTML = html;
 
 
-            for (let i = 0; i < data.results.length;i++){
-                const movie = data.results[i]
+            // for (let i = 0; i < data.results.length;i++){
+            //     const movie = data.results[i]
 
-                // let id = element.querySelector(`#a${movie.title}`);
+            //     // let id = element.querySelector(`#a${movie.title}`);
 
-                id.onclick =function(){
-                    console.log('hola')
-                }
-            }
+            //     id.onclick =function(){
+            //         console.log('hola')
+            //     }
+            //}
            
         }else if(response.status === 401) {
             console.log('Paso algo malo')
@@ -97,4 +84,37 @@ const loadMovies = async() => {
   
 }
 
+function showCard(id,title,vote,date) {
+    
+    let html = "";
+    
+    html += `
+    <div id="#a${id}" class="modal">
+        
+        <div class="modal-container">
+            <span id="#cerrar${id}" class="close">&times;</span>
+            
+            <div class="description-div">
+                <div class="title">
+                    <h1>${title}</h1>
+                    
+                </div>
+                <h3>Valoración</h3>
+                </br>
+                <p><b>${vote}</b></p>
+                <h4>Fecha de lanzamiento: ${date}</h4>
+            </div>
+        </div>
+
+    </div>`
+    document.getElementById('container_show').innerHTML = html;
+    let modal = html.querySelector(`#a${id}`);
+    let span = html.querySelector(`#cerrar${id}`);
+
+    modal.style.display = 'block';
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+}
+    
 loadMovies();
