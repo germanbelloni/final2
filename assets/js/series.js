@@ -29,7 +29,7 @@ const loadSeries = async() => {
             const data = await response.json()
             
             showSeries(data.results);
-            //showCard(data.results);
+            
         }else if(response.status === 401) {
             console.log('Paso algo malo')
         }else if(response.status === 404) {
@@ -67,7 +67,7 @@ const showSeries = async(data) => {
                     <section class="movie" id="a${movie.name}">
                         <img class="poster" src="https://image.tmdb.org/t/p/w500/${movie.backdrop_path}" alt="${movie.name}">
                         <h1>${movie.name}</h1>
-                        <button id="a${movie.name}"/>
+                        <button class="btn" onclick="showCard(${movie.id},'${movie.backdrop_path}','${movie.name}','${movie.overview}','${movie.vote_average}','${movie.first_air_date}','${movie.original_language}')">Show More</button>
                         
                     </section>
                 `
@@ -84,31 +84,71 @@ const showSeries = async(data) => {
     
 }
 
-// function showCard(movies){
-//     main.innerHTML=''
-//     movies.forEach((movie) =>{
-//         const {name, backdrop_path, vote_average,first_air_date,overview}=movie
-//         const moviesElement=document.createElement('div')
-//         moviesElement.innerHTML=`
-//             <div id="${movie.id}" class="modal">
+function showCard(id,poster,name,overview,vote,date,language) {
 
-//                 <div class="modal-container">
-//                     <span id="${movie.id}" class="close">&times;</span>
-//                     <img src="https://image.tmdb.org/t/p/w500/${movie.backdrop_path}" alt="${movie.name}">
-//                     <div class="description-div">
-//                         <div class="title">
-//                             <h1>${movie.name}</h1>
-//                             <p>${movie.overview}</p>
-//                         </div>
-//                         <h3>Valoración</h3>
-//                         </br>
-//                         <p><b>${movie.vote_average}</b></p>
-//                         <h4>Fecha de lanzamiento: ${movie.first_air_date}</h4>
-//                     </div>
-//                 </div>
+    let el = document.createElement('div');
+    let year = date.split('-').pop();
+    
+    let html = "";
+    
+    html += `
+    <div class="modal-content2">
+    
+        <div class="modal-header">
+            <span id="cerrar" class="close">&times;</span>
+      
+        </div>
 
-//             </div>
-//             `
-//     })
-//}
+        <div class="modal-body">
+            <div class="row">
+                <section class="movie">
+                    <img src="https://image.tmdb.org/t/p/w500/${poster}" alt="${name}">
+                
+                </section>
+                
+            </div>
+
+            <div class="row2">
+                <div class="column">
+
+                    <h2 class="title">${name} (${year})</h2>
+                    <b>${date} (${language})</b>
+                    <br>
+                    <span class="${vote_average(vote)}">${vote}</span>
+                    <b>Vista General</b>
+                    <p>${overview}</p>
+                    <button class="trailer"><a href="https://www.youtube.com/results?search_query=${name}+trailer">Trailer</a></button>
+
+                    
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            
+        </div>
+    </div>
+
+    `
+    let div = document.getElementById('container_show');
+    
+    div.innerHTML = html;
+    let span = document.getElementById('cerrar')
+    div.style.display = 'block';
+    
+    span.onclick = function() {
+        div.style.display = "none";
+    }
+
+    function vote_average(rating){
+        if(rating>=6.5){
+            return 'green'
+        }else if(rating>=4.2){
+            return 'orange'
+        }else{
+            return 'red'
+        }
+        
+    }
+
+}
 loadSeries()

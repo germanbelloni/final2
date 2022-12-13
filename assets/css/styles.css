@@ -156,59 +156,141 @@ body {
     justify-content: center;
 }
 
-.modal{
-    position: fixed;
-    top: 0;
+/* Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #1d1d1dbd;
-    display:flex;
-    opacity: 0;
-    pointer-events: none;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.modal--show{
-    opacity: 1;
-    pointer-events: unset;
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+.modal-content2 {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+    }
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #ffffff;
+    color: black;
+    height:40px;
+}
+
+.modal-body {
+    padding: 2px 20px;
+    display: flex;
+}
+
+.column{
+    display: grid;
+    text-align: center;
+}
+
+.column .title{
+    font-weight: bold;
+    font-size: 45px;
+}
+.row2{
+    background-image: url("https://image.tmdb.org/t/p/w500/${backdrop_path}");
+}
+.green{
+    color:lightgreen;
+    font-weight: bold;
+    font-size: larger;
+}
+.orange{
+    color:orange;
+    font-weight: bold;
+    font-size: larger;
     
 }
-
-.modal__container{
-    margin: auto;
-    width: 90%;
-    max-width:600px;
-    max-height: 90%;
-    border-radius: 6px;
-    padding: 3em 2.5em;
-    background-color: #fff;
-    display:grid;
-    gap:1em;
-    place-items: center;
-    grid-auto-columns: 100%;
+.red{
+    color:red;
+    font-weight: bold;
+    font-size: larger;
 }
 
-.modal__title{
-    font-size: 2.5rem;
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
 }
 
-.modal__img{
-   width:90%;
-   max-width:300px; 
+.btn{
+    bottom: 0;
+    background: #ff0000;
+    gap: 20px;
+    padding: 9px;
+    font-weight: bold;
 }
 
-.modal__close{
-    text-decoration: none;
-    color: #fff;
-    background-color: #ad5f5f;
-    padding: 1em 3em;
-    border-radius: 6px;
-    display: inline-block;
-    font-weight: 300;
-    transition: background-color .3s;
+.trailer{
+    bottom: 0;
+    background: green;
+    gap: 11px;
+    padding: 5px;
+    font-weight: bold;
+    margin: 10px;
+    height: 30px;
+    width: 150px;
+    justify-self: center;
 }
 
-.modal__close:hover{
-    color:#ad5f5f;
-    background-color:#fff;
-}

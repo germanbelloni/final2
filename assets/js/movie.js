@@ -1,17 +1,7 @@
 let page = 1;
 
-// const openModal = document.querySelector('.movie');
-// const modal = document.querySelector('.modal');
-
-// openModal.addEventListener('click', (e) =>{
-//     e.preventDefault();
-//     modal.classList.add('modal--show');
-// })
-
 const btnBack = document.getElementById('btnBack');
 const btnNext = document.getElementById('btnNext');
-
-const array_movie = []
 
 btnNext.addEventListener('click',() =>{
     if (page<1000){
@@ -48,24 +38,13 @@ const loadMovies = async() => {
                     <section class="movie" id="a${movie.title}">
                         <img class="poster" src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
                         <h1>${movie.title}</h1>
-                        <button class="btn" onclick="showCard(${movie.id},${movie.title},${movie.overview},${movie.vote_average},${movie.release_date})">Show More</button>
+                        <button class="btn" onclick="showCard(${movie.id},'${movie.poster_path}','${movie.title}','${movie.overview}','${movie.vote_average}','${movie.release_date}','${movie.original_language}')">Show More</button>
                         
                         
                     </section>
                 `
             }
             document.getElementById('container').innerHTML = html;
-
-
-            // for (let i = 0; i < data.results.length;i++){
-            //     const movie = data.results[i]
-
-            //     // let id = element.querySelector(`#a${movie.title}`);
-
-            //     id.onclick =function(){
-            //         console.log('hola')
-            //     }
-            //}
            
         }else if(response.status === 401) {
             console.log('Paso algo malo')
@@ -84,37 +63,70 @@ const loadMovies = async() => {
   
 }
 
-function showCard(id,title,vote,date) {
+function showCard(id,poster,title,overview,vote,date,language) {
+
+    let el = document.createElement('div');
+    let year = date.split('-')[0];
     
     let html = "";
     
     html += `
-    <div id="#a${id}" class="modal">
-        
-        <div class="modal-container">
-            <span id="#cerrar${id}" class="close">&times;</span>
-            
-            <div class="description-div">
-                <div class="title">
-                    <h1>${title}</h1>
-                    
-                </div>
-                <h3>Valoración</h3>
-                </br>
-                <p><b>${vote}</b></p>
-                <h4>Fecha de lanzamiento: ${date}</h4>
-            </div>
+    <div class="modal-content">
+    
+        <div class="modal-header">
+            <span id="cerrar" class="close">&times;</span>
+      
         </div>
 
-    </div>`
-    document.getElementById('container_show').innerHTML = html;
-    let modal = html.querySelector(`#a${id}`);
-    let span = html.querySelector(`#cerrar${id}`);
+        <div class="modal-body">
+            <div class="row">
+                <section class="movie">
+                    <img src="https://image.tmdb.org/t/p/w500/${poster}" alt="${title}">
+                
+                </section>
+                
+            </div>
 
-    modal.style.display = 'block';
+            <div class="row2">
+                <div class="column">
+
+                    <h2 class="title">${title} (${year})</h2>
+                    <b>${date} (${language})</b>
+                    <br>
+                    <span class="${vote_average(vote)}">${vote}</span>
+                    <b>Vista General</b>
+                    <p>${overview}</p>
+                    <button class="trailer"><a href="https://www.youtube.com/results?search_query=${title}+trailer">Trailer</a></button>
+
+                    
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            
+        </div>
+    </div>
+
+    `
+    let div = document.getElementById('container_show');
+    
+    div.innerHTML = html;
+    let span = document.getElementById('cerrar')
+    div.style.display = 'block';
+    
     span.onclick = function() {
-        modal.style.display = "none";
+        div.style.display = "none";
     }
 }
+
+function vote_average(rating){
+    if(rating>=6.5){
+        return 'green'
+    }else if(rating>=4.2){
+        return 'orange'
+    }else{
+        return 'red'
+    }
     
+}
 loadMovies();
